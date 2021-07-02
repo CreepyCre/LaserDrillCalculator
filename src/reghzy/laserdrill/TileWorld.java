@@ -13,7 +13,6 @@ public class TileWorld {
     }
 
     public void run() {
-        int laserDrills = 4;
 
         Vector2 gridSize = new Vector2(16, 16);
         Vector2 tileSize = new Vector2(32, 32);
@@ -35,14 +34,7 @@ public class TileWorld {
         //drawer.addLaserDrillSetup(new LaserDrillSetup(new Vector2(6, 8)));
     }
 
-    public boolean canPlace(LaserDrillSetup laserSetup) {
-        for(LaserDrillSetup setup : setups) {
-            if (setup.intersectsArea(laserSetup)) {
-                if (setup.intersectsAnyTile(laserSetup)) {
-                    return false;
-                }
-            }
-        }
-        return true;
+    public boolean canPlace(final LaserDrillSetup laserSetup) {
+        return setups.parallelStream().allMatch(setup -> setup.canPlaceAbove(laserSetup));
     }
 }

@@ -39,36 +39,43 @@ public class LaserDrillSetup{
         this.laser4 = new Tile(this.center.copy().add(0, 1), TileType.LASER, TileDirection.NORTH);
     }
 
-    public boolean intersectsArea(LaserDrillSetup setup) {
+    // We can stack them on different layers, only the path below the drill itself needs to be open to bedrock.
+    public boolean canPlaceAbove(LaserDrillSetup setup) {
+        return !intersectsArea(setup) || !tileIntersectsSolidTile(setup.laserDrill);
+    }
+
+
+
+    private boolean intersectsArea(LaserDrillSetup setup) {
         return this.boundingBox.intersectsAABB(setup.boundingBox);
     }
 
-    public boolean intersectsAnyTile(LaserDrillSetup setup) {
-        if (tileIntersectsAnyTile(setup.laserDrill))
-            return true;
-        if (tileIntersectsAnyTile(setup.preCharger1))
-            return true;
-        if (tileIntersectsAnyTile(setup.preCharger2))
-            return true;
-        if (tileIntersectsAnyTile(setup.preCharger3))
-            return true;
-        if (tileIntersectsAnyTile(setup.preCharger4))
-            return true;
+//    public boolean intersectsAnyTile(LaserDrillSetup setup) {
+//        if (tileIntersectsAnyTile(setup.laserDrill))
+//            return true;
+//        if (tileIntersectsAnyTile(setup.preCharger1))
+//            return true;
+//        if (tileIntersectsAnyTile(setup.preCharger2))
+//            return true;
+//        if (tileIntersectsAnyTile(setup.preCharger3))
+//            return true;
+//        if (tileIntersectsAnyTile(setup.preCharger4))
+//            return true;
+//
+//        // allow the laser beams to cross eachother for a more compact search ;))
+//        //if (tileIntersectsAnyTile(setup.laser1))
+//        //    return true;
+//        //if (tileIntersectsAnyTile(setup.laser2))
+//        //    return true;
+//        //if (tileIntersectsAnyTile(setup.laser3))
+//        //    return true;
+//        //if (tileIntersectsAnyTile(setup.laser4))
+//        //    return true;
+//
+//        return false;
+//    }
 
-        // allow the laser beams to cross eachother for a more compact search ;))
-        //if (tileIntersectsAnyTile(setup.laser1))
-        //    return true;
-        //if (tileIntersectsAnyTile(setup.laser2))
-        //    return true;
-        //if (tileIntersectsAnyTile(setup.laser3))
-        //    return true;
-        //if (tileIntersectsAnyTile(setup.laser4))
-        //    return true;
-
-        return false;
-    }
-
-    public boolean tileIntersectsAnyTile(Tile tile) {
+    private boolean tileIntersectsSolidTile(Tile tile) {
         if (tile.intersectsLocation(this.laserDrill))
             return true;
         if (tile.intersectsLocation(this.preCharger1))
@@ -79,15 +86,30 @@ public class LaserDrillSetup{
             return true;
         if (tile.intersectsLocation(this.preCharger4))
             return true;
-        if (tile.intersectsLocation(this.laser1))
-            return true;
-        if (tile.intersectsLocation(this.laser2))
-            return true;
-        if (tile.intersectsLocation(this.laser3))
-            return true;
-        if (tile.intersectsLocation(this.laser4))
-            return true;
 
         return false;
     }
+//
+//    public boolean tileIntersectsAnyTile(Tile tile) {
+//        if (tile.intersectsLocation(this.laserDrill))
+//            return true;
+//        if (tile.intersectsLocation(this.preCharger1))
+//            return true;
+//        if (tile.intersectsLocation(this.preCharger2))
+//            return true;
+//        if (tile.intersectsLocation(this.preCharger3))
+//            return true;
+//        if (tile.intersectsLocation(this.preCharger4))
+//            return true;
+//        if (tile.intersectsLocation(this.laser1))
+//            return true;
+//        if (tile.intersectsLocation(this.laser2))
+//            return true;
+//        if (tile.intersectsLocation(this.laser3))
+//            return true;
+//        if (tile.intersectsLocation(this.laser4))
+//            return true;
+//
+//        return false;
+//    }
 }
